@@ -1,12 +1,7 @@
 @extends('maindesign')
-@section('index')
 
-    <div class="container">
-      <div class="heading_container heading_center">
-        <h2>
-          Latest Products
-        </h2>
-      </div>
+@section('all_products')
+
       <div class="row">
         @foreach($products as $product)
         <div class="col-sm-6 col-md-4 col-lg-3">
@@ -37,11 +32,10 @@
         @endforeach
         
       <div class="btn-box">
-        <a href="{{route('viewallproducts')}}">
-          View All Products
+        <a href="{{route('index')}}">
+          View Latest Products
         </a>
       </div>
     </div>
-  </section>
 
-  @endsection
+@endsection

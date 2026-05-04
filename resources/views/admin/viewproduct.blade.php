@@ -3,69 +3,80 @@
 @section('view_category')
 
 @if(session('deletecategory_message'))
-<div style="margin-bottom: 10px; color: black;  background-color: orangered;">
-    {{session('deletecategory_message')}}
+<div style="margin-bottom: 10px; color: black; background-color: orangered;">
+    {{ session('deletecategory_message') }}
 </div>
 @endif
 
-<html>
-<head>
-    <title>view product</title>
-    <style>
-        table {
-            width: 60%;
-            border-collapse: collapse;
-            margin: 20px auto;
-            font-family: Arial, sans-serif;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
-</head>
-<body>
+@if(session('deleteproduct_message'))
+<div style="margin-bottom: 10px; color: black; background-color: orangered;">
+    {{ session('deleteproduct_message') }}
+</div>
+@endif
 
-<table border="1" cellpadding="12" cellspacing="0">
-    <tr>
-        <th>Product Title</th>
-        <th>Product Description</th>
-        <th>Product Quantity</th>
-        <th>Product Prices</th>
-        <th>Product Image</th>
-        <th>Product Category</th>
-        <th>Action</th>
-        
-    </tr>
-
-    @foreach ($product as $item)
-        <tr>
-            <td style="padding:12px;">{{ $item->product_title }}</td>
-            <td style="padding:12px;">{{Str::limit($item->product_description,50,"..." ) }}</td>
-            <td style="padding:12px;">{{ $item->product_quantity }}</td>
-            <td style="padding:12px;">{{ $item->product_prices}}</td>
-            <td style="padding:12px;">{{ $item->product_image}}</td>
-            <td style="padding:12px;">{{ $item->product_category }}</td>
-            <td style="padding:12px;">
-            <a href="{{ url('delete_product/'.$item->id) }}" onclick="return confirm('Are you sure?')">
-                 Delete</a>
-
-            <a href="{{ url('edit_product/'.$item->id) }}" style="color:green">
-             Update</a>
-            </td>
-        </tr>
-    @endforeach
-    
-</table>
-    <div style="text-align:center; margin-top: 20px;">
-    {{ $product->links() }}
+<div class="list-inline-item">
+    <form action="{{ route('admin.searchproduct') }}" method="GET">
+        <div class="form-group">
+            <input type="search" name="search" placeholder="What are you searching for...">
+            <button type="submit" class="submit">Search</button>
+        </div>
+    </form>
 </div>
 
-</body>
-</html>
+<style>
+table {
+    width: 60%;
+    border-collapse: collapse;
+    margin: 20px auto;
+    font-family: Arial, sans-serif;
+}
+th {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
+td {
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+    background-color: #e9f7fa;
+}
+th {
+    background-color: #f2f2f2;
+}
+</style>
+
+<table>
+    <thead>
+        <tr>
+            <th>Product Title</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <th>Image</th>
+            <th>Category</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach ($products as $product)
+        <tr>
+            <td style="padding:12px;">{{ $product->product_title }}</td>
+            <td style="padding:12px;">{{ Str::limit($product->product_description, 50, "...") }}</td>
+            <td style="padding:12px;">{{ $product->product_quantity }}</td>
+            <td style="padding:12px;">{{ $product->product_prices }}</td>
+            <td>
+                <img src="{{ asset('product/'.$product->product_image) }}" width="80">
+            </td>
+            <td style="padding:12px;">{{ $product->product_category }}</td>
+            <td style="padding:12px;">
+                <a href="{{ route('admin.deleteproduct',$product->id) }}" onclick= "return confirm ('Are you  sure?')">Delete</a>
+                <a href="{{ route('admin.updateproduct',$product->id) }}" style="color:green">Update</a>
+            </td>
+        </tr>
+        @endforeach 
+    </tbody>
+</table>
 
 @endsection
