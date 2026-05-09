@@ -35,8 +35,8 @@
         <th>Product</th>
         <th>Price</th>
         <th>Product Image</th>
-        <th>Action</th>
-        
+        <th>Status</th>
+        <th>Invoice</th>
     </tr>
 
     @foreach ($orders as $order)
@@ -55,11 +55,16 @@
                 <option value="{{ $order->status}}">{{ $order->status}}</option>
                 <option value="Delivered">Delivered</option>
                 <option value="Pending">Pending</option>
-                
+    
               </select>
               <input type="submit" name="submit" value="submit" onclick= "return confirm ('Are you  sure?')">
             </form>
-        </tr>
+            </td>
+            <td style=" padding: 15px;">
+            <a href="{{route('admin.downloadinvoice',$order->id)}}" class="btn btn-primary"->Download Invoice</a>
+
+            </td>
+        </tr
     @endforeach
     
 

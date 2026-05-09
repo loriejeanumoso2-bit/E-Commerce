@@ -62,5 +62,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::any('/search', [AdminController::class, 'searchproduct'])->name('admin.searchproduct');
     Route::get('/view_orders', [AdminController::class, 'viewOrders'])->name('admin.vieworders');
     Route::post('/change_status/{id}', [AdminController::class, 'changeStatus'])->name('admin.change_status');
+    Route::get('/downloadinvoice/{id}', [AdminController::class, 'downloadInvoice'])->name('admin.downloadinvoice');
 });
 require __DIR__.'/auth.php';

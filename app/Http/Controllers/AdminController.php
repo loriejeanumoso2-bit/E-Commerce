@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Order;
+use Barryvdh\DomPDF\Facade\Pdf;
 class AdminController extends Controller
 {
     public function addCategory()
@@ -127,4 +128,10 @@ class AdminController extends Controller
     $order->save();
     return redirect()->back();
 }
+    public function downloadinvoice($id){
+
+    $data= order::findOrFail($id);
+    $pdf = Pdf::loadView('admin.invoice',compact('data'));
+    return $pdf->download('invoice.pdf');
+    }
 }
