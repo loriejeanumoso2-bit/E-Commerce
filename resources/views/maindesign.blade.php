@@ -12,7 +12,7 @@
   <meta name="description" content="" />
   <meta name="author" content="" />
   <link rel="shortcut icon" href="frontend/images/favicon.png" type="image/x-icon">
-
+  <link rel="stylesheet" href="{{asset('admin/css/aboutus.css')}}">
   <title>
     CEA IS BOUTIQUE
   </title>
@@ -46,25 +46,17 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav  ">
             <li class="nav-item active">
-              <a class="nav-link" href="index.html">Home <span class="sr-only">(current)</span></a>
+              <a class="nav-link" href="{{ route('index') }}">Home <span class="sr-only">(current)</span></a>
+            </li>
+            <a class="nav-link" href="{{ route('viewallproducts') }}">Shop</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="shop.html">
-                Shop
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="why.html">
+              <a class="nav-link" href="{{route('why_us')}}">
                 Why Us
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="testimonial.html">
-                Testimonial
-              </a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="contact.html">Contact Us</a>
+              <a class="nav-link" href="{{route('contact_us')}}">Contact Us</a>
             </li>
           </ul>
           <div class="user_option">
@@ -90,13 +82,14 @@
             </a>
             @endif
             <a href="{{route('cartproducts')}}">
-              <i class="fa fa-shopping-bag" aria-hidden="true">{{$count}}</i>
+              <i class="fa fa-shopping-bag" aria-hidden="true">
+                  {{ $count ?? 0 }}
+              </i>
             </a>
-            <form class="form-inline ">
-              <button class="btn nav_search-btn" type="submit">
-                <i class="fa fa-search" aria-hidden="true"></i>
-              </button>
-            </form>
+            <form action="{{ route('search') }}" method="GET">
+              <input type="text" name="query" placeholder="Search products..." required>
+              <button type="submit">Search</button>
+          </form>
           </div>
         </div>
       </nav>
@@ -120,7 +113,7 @@
                       <p>
                         "A Boutique where you can find your style"
                       </p>
-                      <a href="">
+                      <a href="{{route('contact_us')}}">
                         Contact Us
                       </a>
                     </div>
@@ -149,49 +142,10 @@
     @yield('product_details')
     @yield('all_products')
     @yield('viewcart_products')
+    @yield('contact_us')
 </section>
 
   <!-- end shop section -->
-  <!-- contact section -->
-  <section class="contact_section ">
-    <div class="container px-0">
-      <div class="heading_container ">
-        <h2 class="">
-          Contact Us
-        </h2>
-      </div>
-    </div>
-    
-        <div class="col-md-6 col-lg-5 px-0">
-          <form action="#">
-            <div>
-              <input type="text" placeholder="Name" />
-            </div>
-            <div>
-              <input type="email" placeholder="Email" />
-            </div>
-            <div>
-              <input type="text" placeholder="Phone" />
-            </div>
-            <div>
-              <input type="text" class="message-box" placeholder="Message" />
-            </div>
-            <div class="d-flex ">
-              <button>
-                SEND
-              </button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <br><br><br>
-
-  <!-- end contact section -->
-
-   
 
   <!-- info section -->
 
@@ -217,7 +171,11 @@
               ABOUT US
             </h6>
             <p>
-              to be follow
+               Welcome to our shop! We are a trusted local business based in Tabaco City, Albay,
+            dedicated to providing quality products and excellent customer service.
+            Our goal is to make every shopping experience easy, enjoyable, and affordable
+            for every customer.
+             
             </p>
           </div>
           
@@ -226,7 +184,10 @@
               NEED HELP
             </h6>
             <p>
-              to be follow
+              Have questions or concerns? We're here for you! You can reach us through
+            our contact details below, or send us a message on our social media pages.
+            Our team is available Monday to Saturday, 8:00 AM – 6:00 PM.
+            We'll get back to you as soon as possible.
             </p>
           </div>
           <div class="col-md-6 col-lg-3">
@@ -234,18 +195,18 @@
               CONTACT US
             </h6>
             <div class="info_link-box">
-              <a href="">
+              <a href="{{route('contact_us')}}">
                 <i class="fa fa-map-marker" aria-hidden="true"></i>
-                <span> Gb road 123 london Uk </span>
-              </a>
-              <a href="">
-                <i class="fa fa-phone" aria-hidden="true"></i>
-                <span>+01 12345678901</span>
-              </a>
-              <a href="">
-                <i class="fa fa-envelope" aria-hidden="true"></i>
-                <span> demo@gmail.com</span>
-              </a>
+                <span>Tabaco City, Albay</span>
+            </a>
+            <a href="">
+              <i class="fa fa-phone" aria-hidden="true"></i>
+              <span>+63 945 510 1459</span>
+            </a>
+            <a href="">
+              <i class="fa fa-envelope" aria-hidden="true"></i>
+              <span>Ceaisboutique@gmail.com</span>
+            </a>
             </div>
           </div>
         </div>

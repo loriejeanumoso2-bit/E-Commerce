@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\ProductCart;
 use App\Models\Order;
+use App\Models\Review;
+
 class HomeController extends Controller
 
 {
@@ -33,13 +35,35 @@ class HomeController extends Controller
     }
     public function productDetails($id){
         if(Auth::check()){
-   $count = ProductCart::where('user_id', Auth::id())->count();
-    }
+            $count = ProductCart::where('user_id', Auth::id())->count();
+        }
         else{
-        $count='';
+            $count='';
+        }
+
+        $product = Product::with('reviews')->findOrFail($id);
+
+        return view('product_details', compact('product','count'));
     }
-        $product=Product::findOrFail($id);
-        return view('product_details',compact('product','count'));
+
+    public function storeReview(Request $request, $id)
+    {
+        $product = Product::findOrFail($id);
+
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'review' => 'required|string|max:2000',
+        ]);
+
+        $review = new Review();
+        $review->product_id = $product->id;
+        $review->user_id = Auth::check() ? Auth::id() : null;
+        $review->name = $request->name;
+        $review->review = $request->review;
+        $review->save();
+
+        return redirect()->route('product_details', $product->id)
+            ->with('review_message', 'Thank you! Your review has been submitted.');
     }
     public function allproducts(){
         if(Auth::check()){
@@ -51,15 +75,32 @@ class HomeController extends Controller
         $products=Product::all();
         return view('allproducts',compact('products','count'));
     }
-    public function addToCart($id){
-        $product= Product::findOrFail($id);
-        $product_cart=new ProductCart();
-        $product_cart->user_id=Auth::id();
-        $product_cart->product_id=$product->id;
+    public function addToCart($id)
+{
+    $product = Product::findOrFail($id);
+
+    $cart = ProductCart::where('user_id', Auth::id())
+        ->where('product_id', $id)
+        ->first();
+
+    if ($cart) {
+
+        $cart->quantity += 1;
+        $cart->save();
+
+    } else {
+
+        $product_cart = new ProductCart();
+
+        $product_cart->user_id = Auth::id();
+        $product_cart->product_id = $product->id;
+        $product_cart->quantity = 1;
 
         $product_cart->save();
-        return redirect()->back()->with('cart_message','added to the cart');
-    } 
+    }
+
+    return redirect()->back()->with('cart_message', 'Added to cart');
+}
     public function cartProducts(){
         if(Auth::check()){
    $count = ProductCart::where('user_id', Auth::id())->count();
@@ -102,4 +143,48 @@ class HomeController extends Controller
         $orders=Order::where('user_id',Auth::id())->get();
         return view('viewmyorders',compact('orders'));
     }
+    public function why_us(){
+    
+    return view('whyus');
+}
+public function increaseQuantity($id)
+{
+    $cart = ProductCart::findOrFail($id);
+
+    $cart->quantity += 1;
+
+    $cart->save();
+
+    return redirect()->back();
+}
+
+public function decreaseQuantity($id)
+{
+    $cart = ProductCart::findOrFail($id);
+
+    if ($cart->quantity > 1) {
+
+        $cart->quantity -= 1;
+
+        $cart->save();
+    }
+
+    return redirect()->back();
+}
+public function search(Request $request)
+{
+    if (Auth::check()) {
+        $count = ProductCart::where('user_id', Auth::id())->count();
+    } else {
+        $count = '';
+    }
+
+    $query = trim($request->query('query', ''));
+
+    $products = Product::where('product_title', 'LIKE', "%{$query}%")
+        ->orWhere('product_description', 'LIKE', "%{$query}%")
+        ->get();
+
+    return view('search_results', compact('products', 'query', 'count'));
+}
 }

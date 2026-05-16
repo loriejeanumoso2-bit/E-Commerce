@@ -45,6 +45,7 @@
                 <a href="{{ route('add_to_cart', $product->id) }}" class="btn">
                     Add to Cart
                 </a>
+                
             </div>
 
         </div>
@@ -53,21 +54,47 @@
     <div class="review-section">
         <h2>Customer Reviews</h2>
 
-        <form action="#" method="POST">
+        @if(session('review_message'))
+            <div class="alert">
+                {{ session('review_message') }}
+            </div>
+        @endif
+
+        <form action="{{ route('product_reviews.store', $product->id) }}" method="POST">
             @csrf
 
             <div class="input-group">
-                <input type="text" placeholder="Your Name">
+                <input type="text" name="name" placeholder="Your Name" value="{{ old('name') }}">
+                @error('name')
+                    <div class="error">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="input-group">
-                <input type="text" placeholder="Your Review">
+                <textarea name="review" placeholder="Your Review">{{ old('review') }}</textarea>
+                @error('review')
+                    <div class="error">{{ $message }}</div>
+                @enderror
             </div>
 
             <button type="submit" class="btn-submit">
                 SEND
             </button>
         </form>
+
+        @if($product->reviews->count())
+            <div class="review-list">
+                @foreach($product->reviews as $review)
+                    <div class="review-item">
+                        <strong>{{ $review->name }}</strong>
+                        <p>{{ $review->review }}</p>
+                        <small>{{ $review->created_at->format('M j, Y') }}</small>
+                    </div>
+                @endforeach
+            </div>
+        @else
+            <p>No reviews yet. Be the first to submit one!</p>
+        @endif
     </div>
 
 </div>

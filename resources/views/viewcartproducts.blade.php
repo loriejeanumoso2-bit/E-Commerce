@@ -1,86 +1,141 @@
-@extends('maindesign')
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart</title>
+    <link rel="stylesheet" href="{{asset('admin/css/cartproducts.css')}}">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
-@section('viewcart_products')
-<a href="{{ route('index') }}" class="back-link">
-        ← Back to Products
-    </a>
 
-<div style="max-width: 1000px; margin: 0 auto; padding: 20px;">
+    <div class="cart-container">
 
-<style>
-        table {
-            width: 60%;
-            border-collapse: collapse;
-            margin: 20px auto;
-            font-family: Arial, sans-serif;
-        }
-        th, td {
-            border: 1px solid black;
-            padding: 10px;
-            text-align: center;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-    </style>
+        <a href="{{ route('index') }}" class="back-link">
+            ← Back to Products
+        </a>
 
-<table border="1" cellpadding="12" cellspacing="0">
-    <tr>
-        <th>Product Title</th>
-        <th>Product Prices</th>
-        <th>Product Image</th>
-        <th>Action</th>
-        
-    </tr>
-    @php
-        $price = 0;
-    @endphp
+        @if(session('confirm_order'))
+            <div class="success-message">
+                {{ session('confirm_order') }}
+            </div>
+        @endif
 
-    @foreach ($cart as $cart_product)
-        <tr>
-            <td style="padding:12px;">{{ $cart_product->product->product_title}}</td>
-            <td style="padding:12px;">{{$cart_product->product->product_prices}}</td>
-            <td style="padding:12px;"><img style="width: 150px;" src="{{asset('product/'.$cart_product->product->product_image)}}"></td>
-            <td style="padding:12px;">
-            <a  style="padding:10px; background-color: red; color: white;" href="{{route('removecartproducts',$cart_product->id) }}" onclick="return confirm('Are you sure?')">
-                 Remove</a>
-            </td>
-        </tr>
-        @php
-            $price=$price+$cart_product->product->product_prices;
-        @endphp
-    @endforeach
-    
-    <tr style="border-bottom: 1px solid #ddd; background-color: gray;">
-         <td style="padding:12px;">Total Price</td>
-            <td style="padding:12px;">₱{{$price}}</td>
-            
-    </tr>
-</table>
-@if(session('confirm_order'))
-<div style="border:1px solid blue; color:white; border-radius:4px; padding: 10px;
-    background-color:blue; margin-bottom:10px;">
-    {{session('confirm_order')}}
-</div>
-@endif
-<form action="{{ route('confirm_order') }}" method="post" style="margin-top: 50px;">
-    @csrf
+        <!-- CART -->
+        <div class="cart-box">
 
-    <h4>Contact Info</h4>
+            <div class="cart-header">
+                <div>Product</div>
+                <div>Price</div>
+                <div>Quantity</div>
+                <div>Action</div>
+            </div>
 
-    <textarea name="Receiver_address"
-        placeholder="Enter your address (Province, City, Barangay, Zone)"
-        style="width: 400px; height: 80px; padding:10px;" required></textarea>
+            @php
+                $price = 0;
+            @endphp
 
-    <br><br>
+            @foreach ($cart as $cart_product)
 
-    <input type="text" name="Receiver_phone"
-        placeholder="Enter your phone number"
-        style="width: 400px; height: 40px; padding:10px;" required>
+            <div class="cart-item">
 
-    <br><br>
+                <div class="product-info">
 
-    <input class="btn-primary" type="submit" value="Confirm Order">
-</form>
-</div>
-@endsection
+                    <img class="product-image"
+                    src="{{ asset('product/'.$cart_product->product->product_image) }}">
+
+                    <div class="product-title">
+                        {{ $cart_product->product->product_title }}
+                    </div>
+
+                </div>
+
+                <div class="price">
+                    ₱{{ $cart_product->product->product_prices }}
+                </div>
+
+                <div class="quantity-box">
+
+                <a class="qty-btn"
+                href="{{ route('decrease_quantity', $cart_product->id) }}">
+                    -
+                </a>
+
+                <span class="qty-number">
+                    {{ $cart_product->quantity }}
+                </span>
+
+                <a class="qty-btn"
+                href="{{ route('increase_quantity', $cart_product->id) }}">
+                    +
+                </a>
+
+                </div>
+                <div>
+                    <a class="remove-btn"
+                    href="{{ route('removecartproducts',$cart_product->id) }}"
+                    onclick="return confirm('Are you sure?')">
+                        Remove
+                    </a>
+                </div>
+
+            </div>
+
+            @php
+               $price += $cart_product->product->product_prices * $cart_product->quantity;
+            @endphp
+
+            @endforeach
+
+        </div>
+
+        <!-- TOTAL -->
+        <div class="total-box">
+
+            <div class="total-text">
+                Total:
+            </div>
+
+            <div class="total-price">
+                ₱{{ $price }}
+            </div>
+
+        </div>
+
+        <!-- CHECKOUT -->
+        <div class="checkout-box">
+
+            <div class="checkout-title">
+                Checkout Information
+            </div>
+
+            <form action="{{ route('confirm_order') }}" method="POST">
+
+                @csrf
+
+                <textarea
+                    class="input-field"
+                    name="Receiver_address"
+                    rows="4"
+                    placeholder="Enter complete address..."
+                    required></textarea>
+
+                <input
+                    class="input-field"
+                    type="text"
+                    name="Receiver_phone"
+                    placeholder="Enter phone number..."
+                    required>
+
+                <button class="confirm-btn" type="submit">
+                    Confirm Order
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</body>
+</html>

@@ -40,11 +40,7 @@
           <div class="right-menu list-inline no-margin-bottom">    
             
           
-            <div class="list-inline-item dropdown"><a id="navbarDropdownMenuLink1" 
-            href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
-           class="nav-link messages-toggle"><i class="icon-email"></i><span class="badge dashbg-1">5</span></a>
-         </div>
-          
+           
             
             <!-- Log out -->
             <div class="list-inline-item logout">  
@@ -90,7 +86,7 @@
                     <li><a href="{{route('admin.vieworders')}}">VIEW ORDER</a></li>
                   </ul>
                 </li>
-                <li><a href="login.html"> <i class="icon-logout"></i>home page </a></li>
+               
       </nav>
       <!-- Sidebar Navigation end-->
       <div class="page-content">

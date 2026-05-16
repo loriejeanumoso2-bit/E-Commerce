@@ -1,0 +1,20 @@
+.info_container .row {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+}
+.info_section p {
+  line-height: 1.6;
+  margin-bottom: 10px;
+}
+.info_section .col-md-6,
+.info_section .col-lg-3 {
+  display: flex;
+  flex-direction: column;
+}
+.social_box {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-bottom: 20px;
+}
