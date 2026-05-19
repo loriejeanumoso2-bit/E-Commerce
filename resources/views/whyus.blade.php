@@ -25,7 +25,7 @@
     <a href="{{ route('index') }}">HOME</a>
     <a href="{{ route('viewallproducts') }}">SHOP</a>
     <a href="{{ route('why_us') }}" class="active">WHY US</a>
-    <a href="#">CONTACT US</a>
+    <a href="{{ route('contact_us') }}">CONTACT US</a>
 
     <div class="icons">
       <a href="{{route('login')}}"><i class="fa-solid fa-user"></i> Login</a>
