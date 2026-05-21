@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html>
   <head> 
-        <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Admin</title>
-
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
     <link rel="stylesheet" href="{{ asset('admin/vendor/bootstrap/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/style.default.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/css/custom.css') }}">
@@ -95,7 +96,8 @@
        
     <!-- JavaScript files-->
     <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('admin/vendor/popper.js/umd/popper.min.js') }}"></script>
-<script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('admin/vendor/popper.js/umd/popper.min.js') }}"></script>
+  <script src="{{ asset('admin/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+  <script src="{{ asset('admin/js/front.js') }}"></script>
   </body>
 </html>
