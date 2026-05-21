@@ -19,6 +19,10 @@
                     <x-responsive-nav-link :href="route('myorders')" :active="request()->routeIs('myorders')">
                         {{ __('My Orders') }}
                     </x-responsive-nav-link>
+
+                    <x-responsive-nav-link :href="route('index')" :active="request()->routeIs('index')">
+                        {{ __('Home') }}
+                    </x-responsive-nav-link>
                 </div>
             </div>
 
