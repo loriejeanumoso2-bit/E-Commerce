@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Category;
+use App\Models\Contact;
 use App\Models\Product;
 use App\Models\Order;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -22,6 +23,14 @@ class AdminController extends Controller
     public function viewCategory(){
     $categories=Category::all(); 
     return view('admin.viewcategory',compact('categories'));
+    }
+    public function dashboard(){
+        $categoriesCount = Category::count();
+        $productsCount = Product::count();
+        $ordersCount = Order::count();
+        $messagesCount = Contact::count();
+
+        return view('admin.dashboard', compact('categoriesCount', 'productsCount', 'ordersCount', 'messagesCount'));
     }
     public function deleteCategory($id){
         $category=Category::findOrfail($id);

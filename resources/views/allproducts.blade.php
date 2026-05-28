@@ -59,6 +59,10 @@
                                 ₱{{ $product->product_prices }}
                             </div>
 
+                            <a href="{{ route('add_to_cart', $product->id) }}" class="btn">
+                                Add to Cart
+                            </a>
+
                         </div>
 
                     </div>

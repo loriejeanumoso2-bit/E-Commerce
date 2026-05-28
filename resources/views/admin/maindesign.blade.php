@@ -18,12 +18,9 @@
           <div class="navbar-header">
             <!-- Navbar Header-->
              <a href="{{route('index')}}" class="navbar-brand">
-              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary"></strong><strong>Admin</strong></div>
-        
-            <!-- Sidebar Toggle Btn-->
-            <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
-          </div>
-          <div class="right-menu list-inline no-margin-bottom">    
+              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary"></strong><strong> ← Home</strong></div>
+             </a>
+               
             
           
            
@@ -58,21 +55,21 @@
         </div>
         <!-- Sidebar Navidation Menus--><span class="heading">HOME</span>
         <ul class="list-unstyled">
-                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Category </a>
-                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="#categoryDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Category </a>
+                  <ul id="categoryDropdown" class="collapse list-unstyled ">
                     <li><a href="{{route('admin.addcategory')}}">Add Category</a></li>
                     <li><a href="{{route('admin.viewcategory')}}">View Category</a></li>
                     
                   </ul>
                 </li>
-                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>PRODUCT </a>
-                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                <li><a href="#productDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>PRODUCT </a>
+                  <ul id="productDropdown" class="collapse list-unstyled ">
                     <li><a href="{{route('admin.addproduct')}}">ADD PRODUCT</a></li>
                     <li><a href="{{route('admin.viewproduct')}}">VIEW PRODUCT</a></li>
                     <li><a href="{{route('admin.vieworders')}}">VIEW ORDER</a></li>
                   </ul>
                 </li>
-               
+              </ul>
       </nav>
       <!-- Sidebar Navigation end-->
       <div class="page-content">
@@ -93,7 +90,8 @@
           @yield('view_orders')
         </section>
         <!-- end of all sections -->
-       
+      </div>
+    </div>
     <!-- JavaScript files-->
     <script src="{{ asset('admin/vendor/jquery/jquery.min.js') }}"></script>
   <script src="{{ asset('admin/vendor/popper.js/umd/popper.min.js') }}"></script>

@@ -79,6 +79,25 @@
             margin-top:10px;
             text-decoration:none;
         }
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 25px;
+            background: #2a5885;
+            color: #309ffa;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            border: 2px solid #2a5885;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            transition: all 0.3s ease;
+            }
+
+            .btn:hover {
+             background: #1d3f63;
+             border-color: #1d3f63;
+            transform: translateY(-2px);
+            }
 
         .badge-new{
             position:absolute;
